@@ -10,6 +10,11 @@ export default function Summary() {
   const spending = searchParams.get("pengeluaran");
   const change = searchParams.get("sisa");
 
+  let sisa: number = 0;
+  if (change) {
+    sisa = parseInt(change);
+  }
+
   return (
     <>
       <nav className="px-[32px] py-[24px] absolute top-0">
@@ -32,7 +37,7 @@ export default function Summary() {
         </div>
 
         <p className="mt-[16px] text-[16px] md:text-[24px] text-center">
-          {change >= 0
+          {sisa >= 0
             ? "Kamu belanja cerdas, tidak overbudget!"
             : "Oh tidak, kamu telah overbudget!"}
         </p>

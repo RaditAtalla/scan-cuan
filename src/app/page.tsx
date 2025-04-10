@@ -19,7 +19,7 @@ export default function Home() {
       return;
     }
 
-    router.push(`/product/${encodeURIComponent(budget)}`);
+    router.push(`/product?budget=${budget}`);
   };
 
   return (

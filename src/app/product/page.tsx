@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import ProductCard from "../../../components/product-card";
+import ProductCard from "../../components/product-card";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 const products = [
   {
@@ -43,9 +44,16 @@ const products = [
   },
 ];
 
-export default function Product({ params }: { params: { budget: string } }) {
+export default function Product() {
   const [spending, setSpending] = useState(0);
-  const budget = parseInt(params.budget);
+  const searchParams = useSearchParams();
+
+  const budgetParam = searchParams.get("budget");
+  let budget = 0;
+  if (budgetParam) {
+    budget = parseInt(budgetParam);
+  }
+
   const change = budget - spending;
 
   return (

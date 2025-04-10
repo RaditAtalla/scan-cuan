@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import ProductCard from "../../components/product-card";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 const products = [
@@ -64,44 +64,46 @@ export default function Product() {
         </Link>
       </nav>
 
-      <main className="min-h-screen flex flex-col items-center gap-[32px] pt-[100px] px-[32px] pb-[64px] bg-[url('/background.jpg')] bg-contain">
-        <div className="border-2 border-[#FDC937] bg-[#fff7df] rounded-lg p-8">
-          <p>
-            Anggaran Anda: <span className="font-bold">Rp{budget}</span>
-          </p>
-          <p>
-            Pengeluaran Anda: <span className="font-bold">Rp{spending}</span>
-          </p>
-          <p>
-            Sisa: <span className="font-bold">Rp{change}</span>
-          </p>
-          <div className="flex gap-[8px]">
-            <Link
-              href={`/summary?anggaran=${budget}&pengeluaran=${spending}&sisa=${change}`}
-              className="bg-[#FDC937] py-1 px-2 text-black rounded-lg font-bold"
-            >
-              Selesai
-            </Link>
+      <Suspense fallback={<div>Loading...</div>}>
+        <main className="min-h-screen flex flex-col items-center gap-[32px] pt-[100px] px-[32px] pb-[64px] bg-[url('/background.jpg')] bg-contain">
+          <div className="border-2 border-[#FDC937] bg-[#fff7df] rounded-lg p-8">
+            <p>
+              Anggaran Anda: <span className="font-bold">Rp{budget}</span>
+            </p>
+            <p>
+              Pengeluaran Anda: <span className="font-bold">Rp{spending}</span>
+            </p>
+            <p>
+              Sisa: <span className="font-bold">Rp{change}</span>
+            </p>
+            <div className="flex gap-[8px]">
+              <Link
+                href={`/summary?anggaran=${budget}&pengeluaran=${spending}&sisa=${change}`}
+                className="bg-[#FDC937] py-1 px-2 text-black rounded-lg font-bold"
+              >
+                Selesai
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <h1 className="text-[32px] md:text-[48px] font-semibold text-center">
-          Produk apa yang ingin anda beli?
-        </h1>
+          <h1 className="text-[32px] md:text-[48px] font-semibold text-center">
+            Produk apa yang ingin anda beli?
+          </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[16px]">
-          {products.map((product, index) => {
-            return (
-              <ProductCard
-                key={index}
-                name={product.name}
-                price={product.price}
-                onClick={() => setSpending((prev) => prev + product.price)}
-              />
-            );
-          })}
-        </div>
-      </main>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[16px]">
+            {products.map((product, index) => {
+              return (
+                <ProductCard
+                  key={index}
+                  name={product.name}
+                  price={product.price}
+                  onClick={() => setSpending((prev) => prev + product.price)}
+                />
+              );
+            })}
+          </div>
+        </main>
+      </Suspense>
     </>
   );
 }

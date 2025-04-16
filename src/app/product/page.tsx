@@ -6,42 +6,36 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 const products = [
-  {
-    name: "Aqua",
-    price: 5000,
-  },
-  {
-    name: "Milo",
-    price: 3000,
-  },
-  {
-    name: "Indomie",
-    price: 3000,
-  },
-  {
-    name: "Lifebuoy",
-    price: 50000,
-  },
-  {
-    name: "Bimoli",
-    price: 70000,
-  },
-  {
-    name: "Pepsodent",
-    price: 15000,
-  },
-  {
-    name: "Rexona",
-    price: 30000,
-  },
-  {
-    name: "Kahf Face Wash",
-    price: 32000,
-  },
-  {
-    name: "Chitato",
-    price: 10000,
-  },
+  { name: "Chitato", price: 12000, category: "snack" },
+  { name: "Taro", price: 9500, category: "snack" },
+  { name: "Qtela", price: 10000, category: "snack" },
+  { name: "Tic Tac", price: 8500, category: "snack" },
+  { name: "Oreo", price: 8000, category: "snack" },
+  { name: "Teh Pucuk", price: 6000, category: "minuman" },
+  { name: "Aqua", price: 4000, category: "minuman" },
+  { name: "Floridina", price: 5000, category: "minuman" },
+  { name: "Indomilk", price: 7000, category: "minuman" },
+  { name: "Good Day", price: 6500, category: "minuman" },
+  { name: "Lifebuoy", price: 9000, category: "sabun" },
+  { name: "Dettol", price: 11000, category: "sabun" },
+  { name: "Giv", price: 5000, category: "sabun" },
+  { name: "Nuvo", price: 8500, category: "sabun" },
+  { name: "Clear", price: 12000, category: "shampoo" },
+  { name: "Pantene", price: 13000, category: "shampoo" },
+  { name: "Sunsilk", price: 11500, category: "shampoo" },
+  { name: "Head & Shoulders", price: 14000, category: "shampoo" },
+  { name: "Pepsodent", price: 8000, category: "pasta-gigi" },
+  { name: "Ciptadent", price: 7000, category: "pasta-gigi" },
+  { name: "Formula", price: 6500, category: "pasta-gigi" },
+  { name: "Sensodyne", price: 18000, category: "pasta-gigi" },
+  { name: "Rexona", price: 14000, category: "deodorant" },
+  { name: "Nivea", price: 13500, category: "deodorant" },
+  { name: "Gatsby", price: 12000, category: "deodorant" },
+  { name: "Marina", price: 9500, category: "deodorant" },
+  { name: "Bodrex", price: 5000, category: "obat" },
+  { name: "Paramex", price: 4500, category: "obat" },
+  { name: "Antangin", price: 3000, category: "obat" },
+  { name: "OBH Combi", price: 12000, category: "obat" },
 ];
 
 export default function Product() {
@@ -49,12 +43,21 @@ export default function Product() {
   const searchParams = useSearchParams();
 
   const budgetParam = searchParams.get("budget");
+  const categoryParam = searchParams.get("category");
+
   let budget = 0;
   if (budgetParam) {
     budget = parseInt(budgetParam);
   }
 
   const change = budget - spending;
+
+  const categories = categoryParam?.split(",");
+
+  const filteredProducts = products.filter(
+    (product) =>
+      categories?.includes(product.category) && product.price <= budget
+  );
 
   return (
     <>
@@ -90,12 +93,13 @@ export default function Product() {
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[16px]">
-          {products.map((product, index) => {
+          {filteredProducts.map((product, index) => {
             return (
               <ProductCard
                 key={index}
                 name={product.name}
                 price={product.price}
+                category={product.category}
                 onClick={() => setSpending((prev) => prev + product.price)}
               />
             );

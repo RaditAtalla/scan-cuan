@@ -1,13 +1,20 @@
 type ProductCardType = {
   name: string;
   price: number;
+  category: string;
   onClick?: () => void;
 };
 
-export default function ProductCard({ name, price, onClick }: ProductCardType) {
+export default function ProductCard({
+  name,
+  price,
+  category,
+  onClick,
+}: ProductCardType) {
   return (
     <div className="shadow-lg rounded-lg p-5 w-full sm:min-w-[200px] bg-white">
-      <p className="text-[18px] font-semibold">{name}</p>
+      <p className="text-[18px] font-bold">{name}</p>
+      <p className="text-[18px]">{category}</p>
       <p className="text-gray-700">Rp{price}</p>
       <button
         onClick={onClick}

@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Summary() {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const budget = searchParams.get("anggaran");
   const spending = searchParams.get("pengeluaran");
@@ -13,6 +15,10 @@ export default function Summary() {
   let sisa: number = 0;
   if (change) {
     sisa = parseInt(change);
+  }
+
+  function backHome() {
+    router.push("/");
   }
 
   return (
@@ -42,12 +48,12 @@ export default function Summary() {
             : "Oh tidak, kamu telah overbudget!"}
         </p>
 
-        <Link
-          href={"/"}
+        <button
+          onClick={backHome}
           className="bg-[#FDC937] py-2 px-4 text-black rounded-lg font-bold mt-[16px]"
         >
           Kembali ke Beranda
-        </Link>
+        </button>
       </main>
     </>
   );

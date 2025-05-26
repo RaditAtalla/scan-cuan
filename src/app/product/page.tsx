@@ -61,14 +61,14 @@ export default function Product() {
 
   return (
     <>
-      <nav className="px-[32px] py-[24px] absolute top-0">
+      <nav className="px-[32px] py-[24px] absolute top-0 z-10">
         <Link href={"/"} className="font-bold text-[24px] md:text-[32px]">
           Scan Cuan
         </Link>
       </nav>
 
-      <main className="min-h-screen flex flex-col items-center gap-[32px] pt-[100px] px-[32px] pb-[64px] bg-[url('/background.jpg')] bg-contain">
-        <div className="border-2 border-[#FDC937] bg-[#fff7df] rounded-lg p-8">
+      <main className="relative min-h-screen flex flex-col items-center gap-[32px] pt-[100px] px-[32px] pb-[64px] bg-[url('/background.jpg')] bg-contain">
+        <div className="sticky top-10 hidden sm:block border-2 border-[#FDC937] bg-[#fff7df] rounded-lg p-8">
           <p>
             Anggaran Anda: <span className="font-bold">Rp{budget}</span>
           </p>
@@ -79,6 +79,26 @@ export default function Product() {
             Sisa: <span className="font-bold">Rp{change}</span>
           </p>
           <div className="flex gap-[8px]">
+            <Link
+              href={`/summary?anggaran=${budget}&pengeluaran=${spending}&sisa=${change}`}
+              className="bg-[#FDC937] py-1 px-2 text-black rounded-lg font-bold"
+            >
+              Selesai
+            </Link>
+          </div>
+        </div>
+
+        <div className="fixed bottom-0 border-2 border-[#FDC937] bg-[#fff7df] w-full p-5 sm:hidden">
+          <p>
+            Anggaran Anda: <span className="font-bold">Rp{budget}</span>
+          </p>
+          <p>
+            Pengeluaran Anda: <span className="font-bold">Rp{spending}</span>
+          </p>
+          <p>
+            Sisa: <span className="font-bold">Rp{change}</span>
+          </p>
+          <div className="flex gap-[8px] mt-2">
             <Link
               href={`/summary?anggaran=${budget}&pengeluaran=${spending}&sisa=${change}`}
               className="bg-[#FDC937] py-1 px-2 text-black rounded-lg font-bold"
